@@ -6,7 +6,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+
+import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.hanger.HangerSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.turret.TurretSubsystem;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -15,16 +25,40 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final HangerSubsystem m_hangerSubsystem = new HangerSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final TurretSubsystem m_turretSubsystem = new TurretSubsystem();
+
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //Auto Commands
+  private final Command m_noAuto = new PrintCommand("No Auto");
+
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    // Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("No Auto", m_noAuto);
+
+    // Put the chooser on the dashboard
+    Shuffleboard.getTab("Autonomous").add(m_chooser);
+
+
     // Configure the button bindings
     configureButtonBindings();
   }
+
+
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -34,6 +68,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {}
 
+
+
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -42,5 +79,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return m_autoCommand;
+    return m_chooser.getSelected();
+
   }
 }
