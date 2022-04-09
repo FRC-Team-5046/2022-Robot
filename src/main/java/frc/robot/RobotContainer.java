@@ -5,13 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.drive.commands.DriveDefaultCommand;
+import frc.robot.subsystems.drive.commands.DriveShiftHighCommand;
+import frc.robot.subsystems.drive.commands.DriveShiftLowCommand;
 import frc.robot.subsystems.hanger.HangerSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
@@ -34,7 +39,10 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TurretSubsystem m_turretSubsystem = new TurretSubsystem();
 
+  public Joystick m_driverJoystick = new Joystick(0);
+  public Joystick m_operatorJoystick = new Joystick(1);
 
+  
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   //Auto Commands
   private final Command m_noAuto = new PrintCommand("No Auto");
@@ -54,8 +62,28 @@ public class RobotContainer {
     Shuffleboard.getTab("Autonomous").add(m_chooser);
 
 
+    Shuffleboard.getTab("Running Commands").add(m_driveSubsystem);
+    Shuffleboard.getTab("Running Commands").add(m_intakeSubsystem);
+    Shuffleboard.getTab("Running Commands").add(m_hangerSubsystem);
+    Shuffleboard.getTab("Running Commands").add(m_shooterSubsystem);
+    Shuffleboard.getTab("Running Commands").add(m_turretSubsystem);
+
+    // SmartDashboard.putData(m_driveSubsystem);
+    // SmartDashboard.putData(m_intakeSubsystem);
+    // SmartDashboard.putData(m_hangerSubsystem);
+    // SmartDashboard.putData(m_shooterSubsystem);
+    // SmartDashboard.putData(m_turretSubsystem);
+
+
     // Configure the button bindings
     configureButtonBindings();
+
+    m_driveSubsystem.setDefaultCommand(
+      new DriveDefaultCommand(m_driveSubsystem, () -> m_driverJoystick.getRawAxis(1),
+      () -> m_driverJoystick.getRawAxis(4)));
+
+
+
   }
 
 
@@ -66,11 +94,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    
+    new JoystickButton(m_driverJoystick,5).whenPressed(new DriveShiftHighCommand(m_driveSubsystem));
+    new JoystickButton(m_driverJoystick,6).whenPressed(new DriveShiftLowCommand(m_driveSubsystem));
+
+
+  }
 
 
 
-  
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
