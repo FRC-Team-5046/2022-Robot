@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -65,6 +66,9 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Shuffleboard.getTab("Drive").add("Left Drive Motors Speed", m_leftMotor1.get());
+    Shuffleboard.getTab("Drive").add("Right Drive Motors Speed",m_rightMotor1.get());
+    Shuffleboard.getTab("Drive").add("Shifter State",m_shifter.get());
   }
 
 

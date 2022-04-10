@@ -5,6 +5,8 @@
 package frc.robot.subsystems.turret;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -18,6 +20,9 @@ public class TurretSubsystem extends SubsystemBase {
   /** Creates a new TurretSubsystem. */
 
   private final CANSparkMax m_turret = new CANSparkMax(8,MotorType.kBrushless);
+  //private final SparkMaxPIDController m_turretPIDController = m_turret.getPIDController();
+  private final RelativeEncoder m_turretEncoder = m_turret.getEncoder();
+
 
   float FWDSoftLimitValueDefault = 250;
   float REVSoftLimitValueDefault = 0;
@@ -66,6 +71,8 @@ public class TurretSubsystem extends SubsystemBase {
     m_turret.enableSoftLimit(SoftLimitDirection.kReverse, REVSoftLimitEnabled.getBoolean(FWDSoftLimitEnabledDefault));
     m_turret.setSoftLimit(SoftLimitDirection.kForward, (float) FWDSoftLimitValue.getDouble(REVSoftLimitValueDefault));
     m_turret.setSoftLimit(SoftLimitDirection.kReverse, (float) REVSoftLimitValue.getDouble(FWDSoftLimitValueDefault));
+
+  tab.add("Turret Position",m_turretEncoder.getPosition());
   }
 
   public void TurretManual(double speed) {

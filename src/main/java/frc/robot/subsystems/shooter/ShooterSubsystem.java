@@ -60,6 +60,10 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
+    
+    Shuffleboard.getTab("Shooter").add("Shooter Actual RPM", m_shooter1.getSelectedSensorVelocity() * 600 / 2048);
+    Shuffleboard.getTab("Shooter").add("Loader Motor Speed",m_shooterLoadingMotor.getMotorOutputPercent());
+    
   }
 
   public void ShooterLoaderForward(){
@@ -84,10 +88,8 @@ public class ShooterSubsystem extends SubsystemBase {
 		
     /* 2000 RPM in either direction */
 		m_shooter1.set(TalonFXControlMode.Velocity, -targetVelocity_UnitsPer100ms);
-
-
     Shuffleboard.getTab("Shooter").add("Shooter Requested RPM", rpm);
-    Shuffleboard.getTab("Shooter").add("Shooter Actual RPM", m_shooter1.getSelectedSensorVelocity() * 600 / 2048);
+
     
   }
 

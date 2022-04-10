@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -27,6 +28,9 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Shuffleboard.getTab("Intake").add("Intake Stage One Speed",m_intakeStageOneMotor.getMotorOutputPercent());
+    Shuffleboard.getTab("Intake").add("Intake Stage Two Speed",m_intakeStageTwoMotor.getMotorOutputPercent());
+    Shuffleboard.getTab("Intake").add("Intake Arm Position",m_intakearm.get());
   }
 
   public void intakeStageOneForward(){
