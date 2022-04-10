@@ -7,13 +7,13 @@ package frc.robot.subsystems.hanger.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.hanger.HangerSubsystem;
 
-public class ArmsToggleCommand extends CommandBase {
+public class EarsToggleCommand extends CommandBase {
 
   private final HangerSubsystem m_hangerSubsystem;
   boolean toggle = false;
 
   /** Creates a new ArmsToggleCommand. */
-  public ArmsToggleCommand(HangerSubsystem subsystem) {
+  public EarsToggleCommand(HangerSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_hangerSubsystem = subsystem;
     addRequirements(m_hangerSubsystem);
@@ -22,7 +22,7 @@ public class ArmsToggleCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_hangerSubsystem.hangArmToggle();
+    m_hangerSubsystem.hangEarsToggle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

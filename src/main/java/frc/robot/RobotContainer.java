@@ -18,9 +18,17 @@ import frc.robot.subsystems.drive.commands.DriveDefaultCommand;
 import frc.robot.subsystems.drive.commands.DriveShiftHighCommand;
 import frc.robot.subsystems.drive.commands.DriveShiftLowCommand;
 import frc.robot.subsystems.hanger.HangerSubsystem;
+import frc.robot.subsystems.hanger.commands.ArmsToggleCommand;
+import frc.robot.subsystems.hanger.commands.EarsToggleCommand;
+import frc.robot.subsystems.hanger.commands.HangerDefaultCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.commands.IntakeBallFromGround;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.shooter.commands.ShooterLoaderForwardCommand;
+import frc.robot.subsystems.shooter.commands.ShooterSetRPMCommand;
+import frc.robot.subsystems.shooter.commands.ShooterStopCommand;
 import frc.robot.subsystems.turret.TurretSubsystem;
+import frc.robot.subsystems.turret.commands.TurretDefaultCommand;
 
 
 /**
@@ -82,6 +90,12 @@ public class RobotContainer {
       new DriveDefaultCommand(m_driveSubsystem, () -> m_driverJoystick.getRawAxis(1),
       () -> m_driverJoystick.getRawAxis(4)));
 
+    m_turretSubsystem.setDefaultCommand(
+      new TurretDefaultCommand(m_turretSubsystem, () -> m_operatorJoystick.getRawAxis(4)));
+    
+    m_hangerSubsystem.setDefaultCommand(
+      new HangerDefaultCommand(m_hangerSubsystem, () -> m_driverJoystick.getRawAxis(2), () -> m_driverJoystick.getRawAxis(3)));
+  
 
 
   }
@@ -98,6 +112,18 @@ public class RobotContainer {
     
     new JoystickButton(m_driverJoystick,5).whenPressed(new DriveShiftHighCommand(m_driveSubsystem));
     new JoystickButton(m_driverJoystick,6).whenPressed(new DriveShiftLowCommand(m_driveSubsystem));
+
+    new JoystickButton(m_driverJoystick,1).whenPressed(new ArmsToggleCommand(m_hangerSubsystem));
+    new JoystickButton(m_driverJoystick,4).whenPressed(new EarsToggleCommand(m_hangerSubsystem));
+
+
+    new JoystickButton(m_operatorJoystick,4).whenPressed(new ShooterSetRPMCommand(m_shooterSubsystem, 1500));
+    new JoystickButton(m_operatorJoystick,3).whenPressed(new ShooterSetRPMCommand(m_shooterSubsystem, 1250));
+    new JoystickButton(m_operatorJoystick,2).whenPressed(new ShooterSetRPMCommand(m_shooterSubsystem, 1000));
+    new JoystickButton(m_operatorJoystick,1).whenPressed(new ShooterStopCommand(m_shooterSubsystem));
+
+    new JoystickButton(m_operatorJoystick,6).whenPressed(new IntakeBallFromGround(m_intakeSubsystem));
+    new JoystickButton(m_operatorJoystick,5).whenPressed(new ShooterLoaderForwardCommand(m_shooterSubsystem));
 
 
   }

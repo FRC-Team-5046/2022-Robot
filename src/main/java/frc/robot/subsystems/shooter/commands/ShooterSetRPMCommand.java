@@ -2,27 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.hanger.commands;
+package frc.robot.subsystems.shooter.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.hanger.HangerSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem;
 
-public class ArmsToggleCommand extends CommandBase {
+public class ShooterSetRPMCommand extends CommandBase {
+  /** Creates a new ShooterLoaderForwardCommand. */
+  private final ShooterSubsystem m_shooterSubsystem;
+  private final int m_rpm;
 
-  private final HangerSubsystem m_hangerSubsystem;
-  boolean toggle = false;
-
-  /** Creates a new ArmsToggleCommand. */
-  public ArmsToggleCommand(HangerSubsystem subsystem) {
+  public ShooterSetRPMCommand(ShooterSubsystem subsystem, int rpm) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_hangerSubsystem = subsystem;
-    addRequirements(m_hangerSubsystem);
+    m_shooterSubsystem = subsystem;
+    m_rpm = rpm;
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_hangerSubsystem.hangArmToggle();
+    m_shooterSubsystem.ShooterSetVelocity(m_rpm);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

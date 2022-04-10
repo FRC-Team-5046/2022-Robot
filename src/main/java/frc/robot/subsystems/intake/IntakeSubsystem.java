@@ -57,5 +57,13 @@ public class IntakeSubsystem extends SubsystemBase {
     m_intakearm.set(Value.kReverse);
   }
 
+  public void intakeArmToggle(){
+    if (m_intakearm.get() == Value.kForward){
+      m_intakearm.set(Value.kReverse);
+    } else if (m_intakearm.get() == Value.kReverse){
+      m_intakearm.set(Value.kForward);
+    }
+  }
+
 
 }

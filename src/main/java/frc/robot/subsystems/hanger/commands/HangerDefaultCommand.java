@@ -4,30 +4,37 @@
 
 package frc.robot.subsystems.hanger.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.hanger.HangerSubsystem;
 
-public class ArmsToggleCommand extends CommandBase {
+public class HangerDefaultCommand extends CommandBase {
 
   private final HangerSubsystem m_hangerSubsystem;
-  boolean toggle = false;
+  private final DoubleSupplier m_leftTrigger;
+  private final DoubleSupplier m_rightTrigger;
 
-  /** Creates a new ArmsToggleCommand. */
-  public ArmsToggleCommand(HangerSubsystem subsystem) {
+
+  /** Creates a new IntakeArmDown. */
+  public HangerDefaultCommand(HangerSubsystem subsystem, DoubleSupplier leftTrigger, DoubleSupplier rightTrigger) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_hangerSubsystem = subsystem;
+    m_leftTrigger = leftTrigger;
+    m_rightTrigger = rightTrigger;
     addRequirements(m_hangerSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_hangerSubsystem.hangArmToggle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_hangerSubsystem.HangMoterManual(m_leftTrigger.getAsDouble(), m_rightTrigger.getAsDouble());
+  }
 
   // Called once the command ends or is interrupted.
   @Override

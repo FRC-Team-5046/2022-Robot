@@ -78,6 +78,13 @@ public class HangerSubsystem extends SubsystemBase {
     m_hangarm.set(Value.kReverse);
   }
 
+  public void hangArmToggle(){
+    if (m_hangarm.get() == Value.kForward){
+      m_hangarm.set(Value.kReverse);
+    } else if (m_hangarm.get() == Value.kReverse){
+      m_hangarm.set(Value.kForward);
+    }
+  }
 
   public void hangEarsDown(){
     m_hangears.set(Value.kForward);
@@ -85,6 +92,14 @@ public class HangerSubsystem extends SubsystemBase {
 
   public void hangEarsUp(){
     m_hangears.set(Value.kReverse);
+  }
+
+  public void hangEarsToggle(){
+    if (m_hangears.get() == Value.kForward){
+      m_hangears.set(Value.kReverse);
+    } else if (m_hangears.get() == Value.kReverse){
+      m_hangears.set(Value.kForward);
+    }
   }
 
   public void HangMoterManual(double leftTrigger, double rightTrigger){
